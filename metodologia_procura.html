@@ -537,16 +537,23 @@ window.Quarto = {
 <p>Os dados de procura são fornecidos ao nível da linha de transporte público (<code>route_short_name</code>), em número de passageiros por dia. A associação destes valores à rede viária segue os seguintes passos:</p>
 <ol type="1">
 <li><p><strong>Associação GTFS</strong>: os dados de procura são cruzados com o ficheiro <code>routes.txt</code> do GTFS para obter o <code>route_id</code> correspondente a cada <code>route_short_name</code>;</p></li>
-<li><p><strong>Desagregação por segmento</strong>: para cada combinação de segmento de via (OSM) e hora do dia, é somada a procura de todas as linhas que percorrem esse segmento:</p></li>
+<li><p><strong>Repartição por percurso (<em>shape</em>)</strong>: cada linha de transporte público é composta por múltiplos percursos (<code>shape_id</code>), correspondentes habitualmente aos sentidos de ida e volta e a eventuais variantes. Para mitigar a sobrestimação decorrente de atribuir a procura total da linha a todos os seus sentidos e variantes, a procura diária da linha (<span class="math inline">\(d_r\)</span>) é repartida equitativamente pelo número de percursos distintos (<span class="math inline">\(N_r\)</span>) associados a essa linha no ficheiro <code>trips.txt</code> (<span class="math inline">\(N_r = |S_r|\)</span>):</p></li>
 </ol>
-<p><span class="math display">\[
-d_{w,h} = \sum_{r \in R_{w,h}} d_r
-\]</span></p>
-<p>onde <span class="math inline">\(d_{w,h}\)</span> é a procura no segmento <span class="math inline">\(w\)</span> à hora <span class="math inline">\(h\)</span>, <span class="math inline">\(R_{w,h}\)</span> é o conjunto de linhas que percorrem <span class="math inline">\(w\)</span> à hora <span class="math inline">\(h\)</span>, e <span class="math inline">\(d_r\)</span> é a procura diária da linha <span class="math inline">\(r\)</span>.</p>
+<p><span id="eq-procura-shape"><span class="math display">\[
+d_s = \sum_{r \in R_s} \frac{d_r}{N_r}
+\tag{11.1}\]</span></span></p>
+<p>onde <span class="math inline">\(d_s\)</span> é a procura diária estimada para o percurso <span class="math inline">\(s\)</span>, <span class="math inline">\(N_r\)</span> é o número de percursos distintos (<code>shape_id</code>) da linha <span class="math inline">\(r\)</span>, e <span class="math inline">\(R_s\)</span> é o conjunto de linhas associadas ao percurso <span class="math inline">\(s\)</span> (tipicamente apenas uma linha, pelo que <span class="math inline">\(d_s = \frac{d_r}{N_r}\)</span>).</p>
 <ol start="3" type="1">
-<li><strong>Valor representativo por segmento</strong>: como a procura é um valor diário (sem desagregação horária), o valor associado a cada segmento no painel é o <strong>total observado ao longo do dia</strong>.</li>
+<li><strong>Desagregação por segmento</strong>: para cada combinação de segmento de via (OSM) e hora do dia, é identificada a lista de percursos distintos que o atravessam e somada a respetiva procura:</li>
 </ol>
-<p>Esta abordagem sobreestima o número de passageiros que efetivamente atravessa cada segmento num autocarro, uma vez que nem todos os passageiros frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.</p>
+<p><span id="eq-procura-segmento"><span class="math display">\[
+d_{w,h} = \sum_{s \in S_{w,h}} d_s
+\tag{11.2}\]</span></span></p>
+<p>onde <span class="math inline">\(d_{w,h}\)</span> é a procura no segmento <span class="math inline">\(w\)</span> à hora <span class="math inline">\(h\)</span>, e <span class="math inline">\(S_{w,h}\)</span> é o conjunto de percursos distintos (<code>shape_id</code>) que percorrem <span class="math inline">\(w\)</span> à hora <span class="math inline">\(h\)</span>.</p>
+<ol start="4" type="1">
+<li><strong>Valor representativo por segmento</strong>: como a procura original é um valor diário (sem desagregação horária), o valor atribuído a cada segmento no painel corresponde ao valor máximo observado entre todas as horas do dia (<span class="math inline">\(d_w = \max_h d_{w,h}\)</span>), refletindo a procura agregada dos percursos que operam no segmento no período de maior atividade.</li>
+</ol>
+<p>É importante dar nota que esta abordagem sobrestima o número de passageiros que efetivamente atravessa cada segmento num autocarro, uma vez que nem todos os passageiros frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.</p>
 </section>
 <section id="visualização" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="visualização"><span class="header-section-number">11.2</span> Visualização</h2>
