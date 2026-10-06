@@ -8,17 +8,25 @@ Os dados de procura são fornecidos ao nível da linha de transporte público (`
 
 1. **Associação GTFS**: os dados de procura são cruzados com o ficheiro `routes.txt` do GTFS para obter o `route_id` correspondente a cada `route_short_name`;
 
-2. **Desagregação por segmento**: para cada combinação de segmento de via (OSM) e hora do dia, é somada a procura de todas as linhas que percorrem esse segmento:
+2. **Repartição por percurso (*shape*)**: cada linha de transporte público é composta por múltiplos percursos (`shape_id`), correspondentes habitualmente aos sentidos de ida e volta e a eventuais variantes. Para mitigar a sobrestimação decorrente de atribuir a procura total da linha a todos os seus sentidos e variantes, a procura diária da linha ($d_r$) é repartida equitativamente pelo número de percursos distintos ($N_r$) associados a essa linha no ficheiro `trips.txt` ($N_r = |S_r|$):
 
 $$
-d_{w,h} = \sum_{r \in R_{w,h}} d_r
+d_s = \sum_{r \in R_s} \frac{d_r}{N_r}
+$$ {#eq-procura-shape}
+
+onde $d_s$ é a procura diária estimada para o percurso $s$, $N_r$ é o número de percursos distintos (`shape_id`) da linha $r$, e $R_s$ é o conjunto de linhas associadas ao percurso $s$ (tipicamente apenas uma linha, pelo que $d_s = \frac{d_r}{N_r}$).
+
+3. **Desagregação por segmento**: para cada combinação de segmento de via (OSM) e hora do dia, é identificada a lista de percursos distintos que o atravessam e somada a respetiva procura:
+
 $$
+d_{w,h} = \sum_{s \in S_{w,h}} d_s
+$$ {#eq-procura-segmento}
 
-onde $d_{w,h}$ é a procura no segmento $w$ à hora $h$, $R_{w,h}$ é o conjunto de linhas que percorrem $w$ à hora $h$, e $d_r$ é a procura diária da linha $r$.
+onde $d_{w,h}$ é a procura no segmento $w$ à hora $h$, e $S_{w,h}$ é o conjunto de percursos distintos (`shape_id`) que percorrem $w$ à hora $h$.
 
-3. **Valor representativo por segmento**: como a procura é um valor diário (sem desagregação horária), o valor associado a cada segmento no painel é o **total observado ao longo do dia**. 
+4. **Valor representativo por segmento**: como a procura original é um valor diário (sem desagregação horária), o valor atribuído a cada segmento no painel corresponde ao valor máximo observado entre todas as horas do dia ($d_w = \max_h d_{w,h}$), refletindo a procura agregada dos percursos que operam no segmento no período de maior atividade.
 
-Esta abordagem sobreestima o número de passageiros que efetivamente atravessa cada segmento num autocarro, uma vez que nem todos os passageiros frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.
+É importante dar nota que esta abordagem sobrestima o número de passageiros que efetivamente atravessa cada segmento num autocarro, uma vez que nem todos os passageiros frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.
 
 ## Visualização
 
