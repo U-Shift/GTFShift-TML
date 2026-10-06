@@ -287,20 +287,22 @@
         }
 
         if (di_thresholds_auto) {
-            // Low threshold: magnitude around median/P85 (e.g. boundary of mild disturbance)
-            // High threshold: magnitude around P25 (e.g. boundary of severe disturbance)
+            const absCensus =
+                geoData?.metadata?.data_census?.disturbance_index_abs_hour_length?.[
+                    criteria_hour
+                ] ??
+                geoData?.metadata?.data_census?.disturbance_index_abs_hour_length?.[
+                    String(criteria_hour)
+                ];
+            if (!absCensus) return;
+
             const autoLow = Math.max(
                 1,
-                Math.min(
-                    15,
-                    Math.round(Math.abs(census.p85 ?? 0) * 100) ||
-                        Math.round(Math.abs(census.median) * 100) ||
-                        5,
-                ),
+                Math.min(15, Math.round(Math.abs(absCensus.p25) * 100)),
             );
             const autoHigh = Math.max(
                 autoLow + 2,
-                Math.min(50, Math.round(Math.abs(census.p25) * 100) || 20),
+                Math.min(50, Math.round(Math.abs(absCensus.p75) * 100)),
             );
 
             di_threshold_low = autoLow;
