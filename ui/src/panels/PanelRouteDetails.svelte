@@ -451,7 +451,7 @@
                                                         )} dep/h"
                                                     ></div>
                                                     <span
-                                                        class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full"
+                                                        class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs px-1 rounded"
                                                         style="top: {dailyAvgYPercent}%;"
                                                     >
                                                         Daily Avg: {avgSchedulePerHour.toFixed(
@@ -983,7 +983,7 @@
                                                 ).toFixed(1)} km/h"
                                             ></div>
                                             <span
-                                                class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full"
+                                                class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs px-1 rounded"
                                                 style="top: {speedAvgYPercent}%;"
                                             >
                                                 Daily Avg: {Number(
@@ -1097,7 +1097,7 @@
                                                 ).toFixed(1)}%"
                                             ></div>
                                             <span
-                                                class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full"
+                                                class="absolute left-1 text-[8px] font-mono font-medium text-muted-foreground pointer-events-none select-none z-20 -translate-y-full bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xs px-1 rounded"
                                                 style="top: {periodDiYPercent}%;"
                                             >
                                                 Daily: {periodDI > 0
