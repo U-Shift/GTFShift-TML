@@ -26,7 +26,7 @@ onde $d_{w,h}$ é a procura no segmento $w$ à hora $h$, e $S_{w,h}$ é o conjun
 
 4. **Valor representativo por segmento**: como a procura original é um valor diário (sem desagregação horária), o valor atribuído a cada segmento no painel corresponde ao valor máximo observado entre todas as horas do dia ($d_w = \max_h d_{w,h}$), refletindo a procura agregada dos percursos que operam no segmento no período de maior atividade.
 
-É importante dar nota que esta abordagem sobrestima o número de passageiros que efetivamente atravessa cada segmento num autocarro, uma vez que nem todos os passageiros frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.
+É importante notar que, apesar da divisão do número de passageiros pelo número de percursos da linha, esta abordagem ainda assim tende a sobrestimar o número de passageiros que efetivamente atravessam cada segmento, uma vez que nem todos frequentam a totalidade da linha, podendo embarcar ou desembarcar nas suas paragens intermédias.
 
 ## Visualização
 
