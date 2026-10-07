@@ -13,7 +13,7 @@ Antes de apresentar o detalhe da metodologia aplicada e do funcionamento do pain
 
 ## GTFShift: pacote de código R
 
-O **GTFShift** [@matos_gtfshift_2026] é um pacote de código em R focado na harmonização de dados de operação de transporte público (GTFS) com a infraestrutura viária (OpenStreetMap, OSM) que permite uma análise integrada dos sistemas de transporte, disponibilizando métodos de recolha e processamento de dados relativos a elementos urbanos, operação planeada e a sua execução. A junção destas dimensões permite um estudo aprofundado sobre o funcionamento e o desempenho dos vários modos que compõe o esqueleto da mobilidade nas nossas cidades, assim como o diagonóstico dos principais constrangimentos como auxílio aos processos de tomada de decisão em políticas públicas. 
+O **GTFShift** [@matos_gtfshift_2026] é um pacote de código em R focado na harmonização de dados de operação de transporte público (GTFS) com a infraestrutura viária (OpenStreetMap, OSM) que permite uma análise integrada dos sistemas de transporte, disponibilizando métodos de recolha e processamento de dados relativos a elementos urbanos, operação planeada e a sua execução. A junção destas dimensões permite um estudo aprofundado sobre o funcionamento e o desempenho dos vários modos que compõe o esqueleto da mobilidade nas nossas cidades, assim como o diagnóstico dos principais constrangimentos como auxílio aos processos de tomada de decisão em políticas públicas. 
 
 ## GTFShift: ferramenta de priorização de corredores *bus*
 
